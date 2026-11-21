@@ -106,7 +106,7 @@
   <div class="wrap">
     <div class="eyebrow">PODCAST｜飯友招募中</div>
     <h1>一起<span>吃飯</span>嗎？</h1>
-    <p class="lead">一個人吃飯太無聊。來跟我們四個吃頓晚餐、聊聊近況。沒有腳本，聊著聊著就成了一集節目。</p>
+    <p class="lead">一個人吃飯太無聊。帶著你的晚餐，來跟我們四個一起吃、聊聊近況。沒有腳本，聊著聊著就成了一集節目。</p>
     <div class="actions">
       <a class="btn" href="#join">我想一起吃</a>
       <a class="btn ghost" href="https://podcasts.apple.com/tw/podcast/%E4%B8%80%E8%B5%B7%E5%90%83%E9%A3%AF%E5%97%8E/id1843636441">先聽聽看</a>
@@ -114,8 +114,8 @@
     <div class="facts">
       <div class="fact"><b>地點</b><span>台中北區・有一天音樂工作室</span></div>
       <div class="fact"><b>時間</b><span>平日晚上 8–11 點</span></div>
-      <div class="fact"><b>餐費</b><span>各自負擔</span></div>
-      <div class="fact"><b>需要準備</b><span>你自己就好</span></div>
+      <div class="fact"><b>晚餐</b><span>自己帶來一起吃</span></div>
+      <div class="fact"><b>需要準備</b><span>你的晚餐和好胃口</span></div>
     </div>
   </div>
 </header>
@@ -127,7 +127,7 @@
     <ol class="steps">
       <li><div><h3>填下面的報名表</h3><p>告訴我們你是誰、想聊什麼、哪幾天晚上有空。</p></div></li>
       <li><div><h3>透過 LINE 跟我們聯絡</h3><p>送出後會帶你到 LINE 官方帳號，我們會在那邊回覆、約時間。</p></div></li>
-      <li><div><h3>來工作室吃飯、開錄</h3><p>確認後會給你詳細地址。到了就邊吃邊聊，不用準備稿子。</p></div></li>
+      <li><div><h3>來工作室吃飯、開錄</h3><p>確認後會給你詳細地址。帶著你的晚餐來，邊吃邊聊，不用準備稿子。</p></div></li>
       <li><div><h3>節目上架</h3><p>剪輯完成會在 Apple Podcasts、IG 公開，也會通知你收聽。</p></div></li>
     </ol>
     <h3 style="margin-top:36px;font-size:1.3rem">錄音須知</h3>
@@ -135,6 +135,7 @@
       <div class="fact"><b>錄多久</b><span>一集約 1 小時，每次錄兩集</span></div>
       <div class="fact"><b>聊什麼</b><span>四位主持人各出一題；你可以自己帶題目，或聊我們準備的</span></div>
       <div class="fact"><b>可以帶朋友嗎</b><span>可以，再多帶一位朋友</span></div>
+      <div class="fact"><b>吃什麼</b><span>帶自己想吃的晚餐過來就好</span></div>
       <div class="fact"><b>要露臉嗎</b><span>你決定，露臉或不露臉都可以</span></div>
     </div>
   </div>
@@ -195,7 +196,7 @@
         <button type="button" class="chip" aria-pressed="false">週五</button>
       </div>
 
-      <label class="f" for="food">那天想吃什麼？ <small>選填，隨便寫</small></label>
+      <label class="f" for="food">那天打算帶什麼來吃？ <small>選填，隨便寫</small></label>
       <input type="text" id="food" placeholder="鹹酥雞、便當、火鍋都行" maxlength="40">
 
       <label class="f" for="more">還有什麼想讓我們知道？ <small>選填</small></label>
@@ -218,7 +219,7 @@
     <div class="eyebrow">FAQ</div>
     <h2>可能會想問</h2>
     <details><summary>我不太會講話，也可以來嗎？</summary><p>可以。節目就是一般吃飯聊天，我們四個會接話，你自在就好。</p></details>
-    <details><summary>需要付錢嗎？</summary><p>參加節目不用錢，只有自己的餐費各自負擔。</p></details>
+    <details><summary>需要付錢嗎？</summary><p>參加節目不用錢，晚餐自己帶來就好。</p></details>
     <details><summary>可以帶朋友一起來嗎？</summary><p>可以再多帶一位朋友，在「還有什麼想讓我們知道」寫上他的名字就好。</p></details>
     <details><summary>一定要露臉嗎？</summary><p>不用，報名時勾選「不想露臉」，影片裡就不會拍到你的臉。</p></details>
     <details><summary>錄完後悔了怎麼辦？</summary><p>上架前跟我們說，我們會跟你討論要剪掉哪些片段。</p></details>
@@ -280,7 +281,7 @@
       '稱呼：' + name, '年齡：' + age, '身分：' + job,
       '想聊：' + (topic || '聊你們準備的題目'), '方便：' + days.join('、') + ' 晚上',
     ];
-    if ($('food').value.trim()) lines.push('想吃：' + $('food').value.trim());
+    if ($('food').value.trim()) lines.push('帶什麼吃：' + $('food').value.trim());
     if ($('more').value.trim()) lines.push('其他：' + $('more').value.trim());
     lines.push('使用化名：' + ($('alias').checked ? '是' : '否'));
     lines.push('露臉：' + ($('noface').checked ? '不露臉' : '可以'));
