@@ -130,6 +130,13 @@
       <li><div><h3>來工作室吃飯、開錄</h3><p>確認後會給你詳細地址。到了就邊吃邊聊，不用準備稿子。</p></div></li>
       <li><div><h3>節目上架</h3><p>剪輯完成會在 Apple Podcasts、IG 公開，也會通知你收聽。</p></div></li>
     </ol>
+    <h3 style="margin-top:36px;font-size:1.3rem">錄音須知</h3>
+    <div class="facts">
+      <div class="fact"><b>錄多久</b><span>一集約 1 小時，每次錄兩集</span></div>
+      <div class="fact"><b>聊什麼</b><span>四位主持人各出一題；你可以自己帶題目，或聊我們準備的</span></div>
+      <div class="fact"><b>可以帶朋友嗎</b><span>可以，再多帶一位朋友</span></div>
+      <div class="fact"><b>要露臉嗎</b><span>你決定，露臉或不露臉都可以</span></div>
+    </div>
   </div>
 </section>
 
@@ -173,7 +180,7 @@
       <label class="f" for="job">你平常在做什麼？ <small>工作、學校或任何身分</small></label>
       <input type="text" id="job" placeholder="例如：咖啡師、剛離職、斜槓媽媽" maxlength="60">
 
-      <label class="f" for="topic">最想在餐桌上聊的一個話題</label>
+      <label class="f" for="topic">最想在餐桌上聊的一個話題 <small>沒想法也沒關係，可以聊我們準備的題目</small></label>
       <div class="topicrow">
         <input type="text" id="topic" placeholder="想不到可以按右邊抽一個" maxlength="80">
         <button type="button" class="dice" id="dice" aria-label="隨機抽一個話題">🎲 抽</button>
@@ -195,8 +202,9 @@
       <textarea id="more" maxlength="300" placeholder="你的 IG、想跟誰一起來、有沒有不想聊的話題…"></textarea>
 
       <label class="check"><input type="checkbox" id="adult"> 我已年滿 18 歲。</label>
-      <label class="check"><input type="checkbox" id="consent"> 我了解這頓飯會錄音，並在 Podcast 與社群上公開播出。</label>
+      <label class="check"><input type="checkbox" id="consent"> 我了解這頓飯會錄音錄影，並在 Podcast 與社群上公開播出。</label>
       <label class="check"><input type="checkbox" id="alias"> 我希望節目裡用化名稱呼我。</label>
+      <label class="check"><input type="checkbox" id="noface"> 我不想在影片中露臉。</label>
 
       <div class="err" id="err" role="alert"></div>
       <button type="submit" class="btn" style="width:100%;margin-top:6px">送出報名</button>
@@ -211,7 +219,8 @@
     <h2>可能會想問</h2>
     <details><summary>我不太會講話，也可以來嗎？</summary><p>可以。節目就是一般吃飯聊天，我們四個會接話，你自在就好。</p></details>
     <details><summary>需要付錢嗎？</summary><p>參加節目不用錢，只有自己的餐費各自負擔。</p></details>
-    <details><summary>可以兩個人一起報名嗎？</summary><p>可以，在「還有什麼想讓我們知道」寫上朋友的名字，我們在 LINE 上再討論。</p></details>
+    <details><summary>可以帶朋友一起來嗎？</summary><p>可以再多帶一位朋友，在「還有什麼想讓我們知道」寫上他的名字就好。</p></details>
+    <details><summary>一定要露臉嗎？</summary><p>不用，報名時勾選「不想露臉」，影片裡就不會拍到你的臉。</p></details>
     <details><summary>錄完後悔了怎麼辦？</summary><p>上架前跟我們說，我們會跟你討論要剪掉哪些片段。</p></details>
   </div>
 </section>
@@ -260,8 +269,7 @@
     if (!name) problems.push('稱呼');
     if (!age) problems.push('年齡');
     if (!job) problems.push('你在做什麼');
-    if (!topic) problems.push('想聊的話題');
-    if (!days.length) problems.push('方便的日子');
+        if (!days.length) problems.push('方便的日子');
     if (problems.length) { $('err').textContent = '還差：' + problems.join('、'); return; }
     if (age < 18 || !$('adult').checked) { $('err').textContent = '目前只邀請年滿 18 歲的來賓，謝謝你的喜歡！'; return; }
     if (!$('consent').checked) { $('err').textContent = '請勾選同意錄音與公開播出，我們才能邀請你喔。'; return; }
@@ -270,11 +278,12 @@
     const lines = [
       '【一起吃飯嗎？飯友報名】',
       '稱呼：' + name, '年齡：' + age, '身分：' + job,
-      '想聊：' + topic, '方便：' + days.join('、') + ' 晚上',
+      '想聊：' + (topic || '聊你們準備的題目'), '方便：' + days.join('、') + ' 晚上',
     ];
     if ($('food').value.trim()) lines.push('想吃：' + $('food').value.trim());
     if ($('more').value.trim()) lines.push('其他：' + $('more').value.trim());
     lines.push('使用化名：' + ($('alias').checked ? '是' : '否'));
+    lines.push('露臉：' + ($('noface').checked ? '不露臉' : '可以'));
     const text = lines.join('\n');
     $('msg').textContent = text;
 
