@@ -206,8 +206,6 @@
         <button type="button" class="chip" aria-pressed="false">週五</button>
       </div>
 
-      <label class="f" for="food">那天打算帶什麼來吃？ <small>選填，隨便寫</small></label>
-      <input type="text" id="food" placeholder="鹹酥雞、便當、火鍋都行" maxlength="40">
 
       <label class="f" for="more">還有什麼想讓我們知道？ <small>選填</small></label>
       <textarea id="more" maxlength="300" placeholder="你的 IG、想跟誰一起來、有沒有不想聊的話題…"></textarea>
@@ -307,7 +305,6 @@
       '稱呼：' + name, '年齡：' + age, '身分：' + job,
       '想聊：' + topic, '怎麼認識我們：' + how, '喜歡的一集：' + ep, '方便：' + days.join('、') + ' 晚上',
     ];
-    if ($('food').value.trim()) lines.push('帶什麼吃：' + $('food').value.trim());
     if ($('more').value.trim()) lines.push('其他：' + $('more').value.trim());
     lines.push('使用化名：' + ($('alias').checked ? '是' : '否'));
     lines.push('露臉：' + ($('noface').checked ? '不露臉' : '可以'));
@@ -316,7 +313,7 @@
 
     if (SHEET_URL) {
       const d = new URLSearchParams({ name, age, job, topic, how, ep, days: days.join('、'),
-        food: $('food').value.trim(), more: $('more').value.trim(),
+        more: $('more').value.trim(),
         alias: $('alias').checked ? '是' : '否', face: $('noface').checked ? '不露臉' : '可以' });
       // 防重複：同一支手機 30 分鐘內送出完全相同的內容就不再寄出
       const sig = d.toString(); let last = null;
