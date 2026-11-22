@@ -188,11 +188,14 @@
       <label class="f" for="job">你平常在做什麼？ <small>工作、學校或任何身分</small></label>
       <input type="text" id="job" placeholder="例如：咖啡師、剛離職、斜槓媽媽" maxlength="60">
 
-      <label class="f" for="topic">最想在餐桌上聊的一個話題 <small>沒想法也沒關係，可以聊我們準備的題目</small></label>
-      <div class="topicrow">
-        <input type="text" id="topic" placeholder="想不到可以按右邊抽一個" maxlength="80">
-        <button type="button" class="dice" id="dice" aria-label="隨機抽一個話題">🎲 抽</button>
-      </div>
+      <label class="f" for="topic">最想在餐桌上聊的一個話題</label>
+      <input type="text" id="topic" placeholder="例如：最近的煩惱、人生第一次出國、你相信有鬼嗎" maxlength="80">
+
+      <label class="f" for="how">怎麼認識我們的？</label>
+      <input type="text" id="how" placeholder="例如：IG 滑到、朋友推薦、Podcast 推薦" maxlength="60">
+
+      <label class="f" for="ep">喜歡我們的哪一集？</label>
+      <input type="text" id="ep" placeholder="例如：EP13 都是父母害的啦" maxlength="60">
 
       <label class="f">哪幾個平日晚上比較方便？ <small>可複選</small></label>
       <div class="chips" id="days">
@@ -219,7 +222,8 @@
       <div class="note" style="margin-top:12px;padding:12px 14px;border-radius:12px;background:#fdf1e7;border:1px solid #f0d2bd;line-height:1.7">
         <b>注意事項</b><br>
         ・需追蹤我們的 <a href="https://www.instagram.com/eattogether_ok">IG</a> 和 <a href="https://podcasts.apple.com/tw/podcast/%E4%B8%80%E8%B5%B7%E5%90%83%E9%A3%AF%E5%97%8E/id1843636441">Podcast</a><br>
-        ・可以入鏡的朋友會優先考慮入選
+        ・可以入鏡的朋友會優先考慮入選<br>
+        ・請自備晚餐帶過來喔！
       </div>
       <p class="note" style="margin-top:12px">我們會依照話題和時間挑選來賓，不一定每位都能邀請，但每則報名我們都會看。</p>
     </form>
@@ -241,6 +245,7 @@
 <footer>
   <div><a href="https://line.me/R/ti/p/@083uutjn">LINE 官方帳號</a>·<a href="https://www.instagram.com/eattogether_ok">Instagram</a>·<a href="https://podcasts.apple.com/tw/podcast/%E4%B8%80%E8%B5%B7%E5%90%83%E9%A3%AF%E5%97%8E/id1843636441">Apple Podcasts</a></div>
   <div style="margin-top:8px">© 一起吃飯嗎？</div>
+  <div style="margin-top:14px"><a href="https://script.google.com/macros/s/AKfycbwH6De6dqTv0aDNYJajl5QvIQiTtzHmIF5x9lBqzh_NAjVuEqmWxHjV2MnxF8CJDPTNaw/exec?admin=1" style="display:inline-block;padding:6px 14px;border:1px solid currentColor;border-radius:999px;font-size:.85rem;opacity:.7;text-decoration:none">主持人後台</a></div>
 </footer>
 
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="dtitle">
@@ -275,11 +280,6 @@
   function jumpToHash(){ const id = location.hash.slice(1); if (['join','hosts','howto'].includes(id)) { const el = document.getElementById(id); if (el) el.scrollIntoView(); } }
   window.addEventListener('load', jumpToHash);
   window.addEventListener('hashchange', jumpToHash);
-  let bag = [];
-  $('dice').addEventListener('click', () => {
-    if (!bag.length) bag = topics.map((_, i) => i).sort(() => Math.random() - 0.5);
-    $('topic').value = topics[bag.pop()];
-  });
   document.querySelectorAll('#days .chip').forEach(c =>
     c.addEventListener('click', () => c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') !== 'true')));
 
@@ -287,11 +287,15 @@
     e.preventDefault();
     const name = $('name').value.trim(), age = parseInt($('age').value, 10),
           job = $('job').value.trim(), topic = $('topic').value.trim(),
+          how = $('how').value.trim(), ep = $('ep').value.trim(),
           days = [...document.querySelectorAll('#days .chip[aria-pressed=true]')].map(c => c.textContent);
     const problems = [];
     if (!name) problems.push('稱呼');
     if (!age) problems.push('年齡');
     if (!job) problems.push('你在做什麼');
+    if (!topic) problems.push('想聊的話題');
+    if (!how) problems.push('怎麼認識我們');
+    if (!ep) problems.push('喜歡哪一集');
         if (!days.length) problems.push('方便的日子');
     if (problems.length) { $('err').textContent = '還差：' + problems.join('、'); return; }
     if (age < 18 || !$('adult').checked) { $('err').textContent = '目前只邀請年滿 18 歲的來賓，謝謝你的喜歡！'; return; }
@@ -301,7 +305,7 @@
     const lines = [
       '【一起吃飯嗎？飯友報名】',
       '稱呼：' + name, '年齡：' + age, '身分：' + job,
-      '想聊：' + (topic || '聊你們準備的題目'), '方便：' + days.join('、') + ' 晚上',
+      '想聊：' + topic, '怎麼認識我們：' + how, '喜歡的一集：' + ep, '方便：' + days.join('、') + ' 晚上',
     ];
     if ($('food').value.trim()) lines.push('帶什麼吃：' + $('food').value.trim());
     if ($('more').value.trim()) lines.push('其他：' + $('more').value.trim());
@@ -311,7 +315,7 @@
     $('msg').textContent = text;
 
     if (SHEET_URL) {
-      const d = new URLSearchParams({ name, age, job, topic: topic || '聊你們準備的題目', days: days.join('、'),
+      const d = new URLSearchParams({ name, age, job, topic, how, ep, days: days.join('、'),
         food: $('food').value.trim(), more: $('more').value.trim(),
         alias: $('alias').checked ? '是' : '否', face: $('noface').checked ? '不露臉' : '可以' });
       // 防重複：同一支手機 30 分鐘內送出完全相同的內容就不再寄出
