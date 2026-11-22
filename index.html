@@ -308,7 +308,13 @@
       const d = new URLSearchParams({ name, age, job, topic: topic || '聊你們準備的題目', days: days.join('、'),
         food: $('food').value.trim(), more: $('more').value.trim(),
         alias: $('alias').checked ? '是' : '否', face: $('noface').checked ? '不露臉' : '可以' });
-      try { fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', body: d }); } catch (_) {}
+      // 防重複：同一支手機 30 分鐘內送出完全相同的內容就不再寄出
+      const sig = d.toString(); let last = null;
+      try { last = JSON.parse(localStorage.getItem('et_last') || 'null'); } catch (_) {}
+      if (!(last && last.sig === sig && Date.now() - last.at < 30 * 60 * 1000)) {
+        try { fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', body: d }); } catch (_) {}
+        try { localStorage.setItem('et_last', JSON.stringify({ sig, at: Date.now() })); } catch (_) {}
+      }
     }
 
     const lb = $('lineBtn');
