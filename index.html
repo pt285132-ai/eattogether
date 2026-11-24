@@ -102,6 +102,7 @@
 </head>
 <body>
 
+<div id="notice" hidden style="background:#C13832;color:#fff;padding:12px 18px;text-align:center;font-weight:600;line-height:1.6;white-space:pre-wrap;word-break:break-word"><span style="display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;padding:1px 10px;margin-right:8px;font-size:.85em">公告</span><span id="noticeText"></span></div>
 <header class="hero">
   <div class="plate" aria-hidden="true"></div>
   <div class="wrap">
@@ -266,6 +267,10 @@
   // 報名開關：讀試算表「設定」分頁 B1（開放／暫停）
   if (SHEET_URL) {
     fetch(SHEET_URL).then(r => r.json()).then(j => {
+      if (j && j.notice) {
+        document.getElementById('noticeText').textContent = j.notice;
+        document.getElementById('notice').hidden = false;
+      }
       if (j && j.open === false) {
         document.getElementById('form').hidden = true;
         document.getElementById('closedBox').hidden = false;
